@@ -13,6 +13,8 @@
 // upper left:    black  (scl)
 // upper right:   yellow (gnd)
 
+// 2022-08-14: MF: Inverted Y-Axis for Left analogue controller. Changed button layout slightly.
+
 #include <Wire.h>
 #include <HID-Project.h>
 
@@ -82,13 +84,13 @@ enum ButtonMappings : uint8_t
   BUTTON_B = 2,
   BUTTON_X = 3,
   BUTTON_Y = 4,
-  BUTTON_PLUS = 5,
-  BUTTON_HOME = 6,
-  BUTTON_MINUS = 7,
-  BUTTON_LEFT_TRIGGER = 8,
-  BUTTON_RIGHT_TRIGGER = 9,
-  BUTTON_ZL = 10,
-  BUTTON_ZR = 11
+  BUTTON_PLUS = 9,
+  BUTTON_HOME = 11,
+  BUTTON_MINUS = 10,
+  BUTTON_LEFT_TRIGGER = 7,
+  BUTTON_RIGHT_TRIGGER = 8,
+  BUTTON_ZL = 5,
+  BUTTON_ZR = 6
 };
 
 // controller data for a Classic Controller according to wiki
@@ -252,7 +254,7 @@ void updateGamepad(ControllerData &data)
   // analog axes for left/right stick and triggers
   // (have to be scaled to Gamepad API's range)
   Gamepad.xAxis((int16_t(data.left_stick_x) - 32) << 10);
-  Gamepad.yAxis((int16_t(data.left_stick_y) - 32) << 10);
+  Gamepad.yAxis((int16_t(data.left_stick_y * -1) - 32) << 10);
 
   Gamepad.rxAxis((int16_t(data.getRightStickX()) - 16) << 11);
   Gamepad.ryAxis((int16_t(data.right_stick_y) - 16) << 11);
